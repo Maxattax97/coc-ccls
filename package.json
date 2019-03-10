@@ -28,6 +28,7 @@
   "dependencies": {
     "coc.nvim": "0.0.58",
     "vscode-languageclient": "^5.2.1",
+    "vscode-uri": "^1.0.6",
     "ws": "^6.1.4"
   },
   "repository": {
