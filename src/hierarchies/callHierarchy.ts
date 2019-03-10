@@ -1,4 +1,9 @@
-import { commands, Position, TreeItem, Uri } from 'coc.nvim';
+import { commands } from 'coc.nvim';
+import { Uri } from "vscode-uri";
+import {
+  Position, 
+  TreeItem
+} from "vscode-languageserver-protocol";
 import { LanguageClient } from 'vscode-languageclient/lib/main';
 import { Icon, IHierarchyNode } from '../types';
 import { resourcePath } from '../utils';

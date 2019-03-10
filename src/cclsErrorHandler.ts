@@ -1,4 +1,4 @@
-import {window, WorkspaceConfiguration} from 'coc.nvim';
+import {workspace, WorkspaceConfiguration} from 'coc.nvim';
 import {Message} from 'vscode-jsonrpc';
 import {CloseAction, ErrorAction, ErrorHandler} from 'vscode-languageclient';
 import { logChan } from './globalContext';
@@ -17,9 +17,12 @@ export class CclsErrorHandler implements ErrorHandler {
     const restart = this.config.get('launch.autoRestart');
 
     if (notifyOnCrash) {
-      window.showInformationMessage(
+      workspace.showMessage(
           restart ? 'ccls has crashed; it has been restarted.' :
                     'ccls has crashed; it has not been restarted.');
+      // window.showInformationMessage(
+      //     restart ? 'ccls has crashed; it has been restarted.' :
+      //               'ccls has crashed; it has not been restarted.');
     }
 
     if (restart)

@@ -1,15 +1,14 @@
 import {
-  DecorationRangeBehavior,
-  DecorationRenderOptions,
-  Disposable,
-  Range,
-  TextEditor,
-  TextEditorDecorationType,
-  window,
   workspace,
 } from "coc.nvim";
+import {
+  Disposable,
+  Range,
+} from "vscode-languageserver-protocol";
 import { SymbolKind } from "vscode-languageserver-types";
 import { disposeAll, normalizeUri, unwrap } from "./utils";
+
+const window = workspace;
 
 enum CclsSymbolKind {
   // ls.SymbolKind ccls extensions
@@ -103,7 +102,7 @@ export class SemanticContext implements Disposable {
 
     this.updateConfigValues();
 
-    window.onDidChangeActiveTextEditor(
+    workspace.onDidChangeActiveTextEditor(
       (editor?: TextEditor) => {
         if (editor) {
           this.updateDecoration(editor);

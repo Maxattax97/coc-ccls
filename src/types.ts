@@ -1,4 +1,4 @@
-import { Uri } from 'coc.nvim';
+import { Uri } from 'vscode-uri';
 import * as ls from 'vscode-languageserver-types';
 
 export interface Icon {

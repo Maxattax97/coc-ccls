@@ -1,20 +1,6 @@
 import * as cp from "child_process";
 import {
-  CancellationToken,
-  CodeLens,
   commands,
-  DecorationOptions,
-  DecorationRangeBehavior,
-  DecorationRenderOptions,
-  Disposable,
-  Position,
-  QuickPickItem,
-  Range,
-  TextDocument,
-  TextEditor,
-  ThemeColor,
-  Uri,
-  window,
   workspace,
   WorkspaceConfiguration,
 } from "coc.nvim";
@@ -26,7 +12,16 @@ import {
   ServerOptions,
 } from "vscode-languageclient";
 import { Converter } from "vscode-languageclient/lib/protocolConverter";
+import {
+  CancellationToken,
+  CodeLens,
+  Disposable,
+  Position,
+  Range,
+  TextDocument,
+} from "vscode-languageserver-protocol";
 import * as ls from "vscode-languageserver-types";
+import { Uri } from "vscode-uri";
 import * as WebSocket from 'ws';
 import { CclsErrorHandler } from "./cclsErrorHandler";
 import { cclsChan, logChan } from './globalContext';
@@ -39,6 +34,8 @@ import { StatusBarIconProvider } from "./statusBarIcon";
 import { ClientConfig, IHierarchyNode } from './types';
 import { disposeAll, normalizeUri, unwrap, wait } from "./utils";
 import { jumpToUriAtPosition } from "./vscodeUtils";
+
+const window = workspace;
 
 interface LastGoto {
   id: any;

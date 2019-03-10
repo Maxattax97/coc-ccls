@@ -1,16 +1,13 @@
-import * as path from 'path';
 import {
   commands,
-  Event,
-  EventEmitter,
-  Position,
-  TextEditor,
-  TreeDataProvider,
-  TreeItem,
-  TreeItemCollapsibleState,
-  Uri
 } from 'coc.nvim';
+import * as path from 'path';
 import { Disposable, LanguageClient } from 'vscode-languageclient/lib/main';
+import {
+  Event,
+  Position,
+} from "vscode-languageserver-protocol";
+import { Uri } from "vscode-uri";
 import { IHierarchyNode } from '../types';
 import { disposeAll, setContext } from '../utils';
 

@@ -1,5 +1,8 @@
-import { Position, TreeItem, Uri } from 'coc.nvim';
 import { LanguageClient } from 'vscode-languageclient/lib/main';
+import {
+  Position,
+} from "vscode-languageserver-protocol";
+import { Uri } from "vscode-uri";
 import { IHierarchyNode } from '../types';
 import { Hierarchy } from './hierarchy';
 

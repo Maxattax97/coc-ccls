@@ -1,8 +1,10 @@
-import { StatusBarAlignment, StatusBarItem, window } from "coc.nvim";
+import { StatusBarItem, workspace } from "coc.nvim";
 import { Disposable } from "vscode-jsonrpc";
 import { LanguageClient } from "vscode-languageclient";
 import { cclsChan } from './globalContext';
 import { dedent, unwrap } from './utils';
+
+const window = workspace;
 
 interface CclsInfoResponse {
   db: {
@@ -25,9 +27,9 @@ export class StatusBarIconProvider implements Disposable {
   private wasError = false;
 
   public constructor(private client: LanguageClient, private updateInterval: number) {
-    this.icon = window.createStatusBarItem(StatusBarAlignment.Right);
+    this.icon = window.createStatusBarItem();
     this.icon.text = "ccls: loading";
-    this.icon.tooltip = "ccls is starting / loading project metadata";
+    // this.icon.tooltip = "ccls is starting / loading project metadata";
     this.icon.show();
 
     this.timer = setInterval(this.updateStatus.bind(this), updateInterval);
@@ -48,19 +50,19 @@ export class StatusBarIconProvider implements Disposable {
         return;
       this.wasError = true;
       this.icon.text = "ccls: error";
-      this.icon.color = "red";
-      this.icon.tooltip = "Failed to perform info request: " + (e as Error).message;
+      // this.icon.color = "red";
+      // this.icon.tooltip = "Failed to perform info request: " + (e as Error).message;
       unwrap(cclsChan).show();
       return;
     }
-    this.icon.color = "";
+    // this.icon.color = "";
     this.icon.text = `ccls: ${info.pipeline.pendingIndexRequests || 0} jobs`;
-    this.icon.tooltip = dedent`${info.db.files} files,
-      ${info.db.funcs} functions,
-      ${info.db.types} types,
-      ${info.db.vars} variables,
-      ${info.project.entries} entries in project.
-
-      ${info.pipeline.pendingIndexRequests} pending index requests`;
+    // this.icon.tooltip = dedent`${info.db.files} files,
+    //   ${info.db.funcs} functions,
+    //   ${info.db.types} types,
+    //   ${info.db.vars} variables,
+    //   ${info.project.entries} entries in project.
+    //
+    //   ${info.pipeline.pendingIndexRequests} pending index requests`;
   }
 }

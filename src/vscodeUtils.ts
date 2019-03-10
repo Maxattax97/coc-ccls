@@ -1,12 +1,13 @@
 import {
-  Position,
-  Range,
-  Selection,
-  TextEditorRevealType,
-  Uri,
-  window,
   workspace
 } from "coc.nvim";
+import {
+  Position,
+  Range,
+} from "vscode-languageserver-protocol";
+import { Uri } from "vscode-uri";
+
+const window = workspace;
 
 export async function jumpToUriAtPosition(
     uri: Uri, position: Position, preserveFocus: boolean) {

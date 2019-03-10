@@ -1,14 +1,14 @@
 import {
-  DecorationRangeBehavior,
-  Disposable,
-  Range,
-  TextEditor,
-  TextEditorDecorationType,
-  window,
   workspace
 } from "coc.nvim";
 import { LanguageClient } from "vscode-languageclient";
+import {
+  Disposable,
+  Range,
+} from "vscode-languageserver-protocol";
 import { disposeAll, normalizeUri } from "./utils";
+
+const window = workspace;
 
 export class InactiveRegionsProvider implements Disposable {
   private skippedRanges = new Map<string, Range[]>();

@@ -1,4 +1,5 @@
-import { commands, Disposable, OutputChannel, window, workspace } from 'coc.nvim';
+import { commands, OutputChannel, workspace } from 'coc.nvim';
+import { Disposable } from 'vscode-languageserver-protocol';
 import { ServerContext } from "./serverContext";
 import { disposeAll } from "./utils";
 
@@ -20,14 +21,16 @@ export class GlobalContext implements Disposable {
   private _srvCwd: string;
   public constructor(
   ) {
-    this.chan = window.createOutputChannel('ccls');
+    this.chan = workspace.createOutputChannel('ccls');
     cclsChan = this.chan;
     this._dispose.push(this.chan);
 
-    const wss = workspace.workspaceFolders;
-    if (!wss || wss.length === 0)
+    const wss = workspace.workspaceFolder;
+    // if (!wss || wss.length === 0)
+    if (!wss)
       throw Error("No workspace opened");
-    this._srvCwd = wss[0].uri.fsPath;
+    // this._srvCwd = wss[0].uri.fsPath;
+    this._srvCwd = wss.uri;
     logChan(`Server CWD is ${this._srvCwd}`);
 
     this._server = new ServerContext(this._srvCwd);
