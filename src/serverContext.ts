@@ -17,7 +17,7 @@ import {
   window,
   workspace,
   WorkspaceConfiguration,
-} from "vscode";
+} from "coc.nvim";
 import {
   LanguageClient,
   LanguageClientOptions,

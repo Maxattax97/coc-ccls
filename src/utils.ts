@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as util from "util";
-import { commands, Disposable, Uri } from "vscode";
+import { commands, Disposable, Uri } from "coc.nvim";
 
 export function resourcePath(...paths: string[]): string {
   return path.join(__dirname, "..", "resources", ...paths);

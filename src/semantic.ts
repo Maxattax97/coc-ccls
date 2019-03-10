@@ -7,7 +7,7 @@ import {
   TextEditorDecorationType,
   window,
   workspace,
-} from "vscode";
+} from "coc.nvim";
 import { SymbolKind } from "vscode-languageserver-types";
 import { disposeAll, normalizeUri, unwrap } from "./utils";
 

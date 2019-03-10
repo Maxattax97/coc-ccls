@@ -1,4 +1,4 @@
-import { commands, Disposable, OutputChannel, window, workspace } from 'vscode';
+import { commands, Disposable, OutputChannel, window, workspace } from 'coc.nvim';
 import { ServerContext } from "./serverContext";
 import { disposeAll } from "./utils";
 

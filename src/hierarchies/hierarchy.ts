@@ -9,7 +9,7 @@ import {
   TreeItem,
   TreeItemCollapsibleState,
   Uri
-} from 'vscode';
+} from 'coc.nvim';
 import { Disposable, LanguageClient } from 'vscode-languageclient/lib/main';
 import { IHierarchyNode } from '../types';
 import { disposeAll, setContext } from '../utils';

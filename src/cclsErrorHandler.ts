@@ -1,4 +1,4 @@
-import {window, WorkspaceConfiguration} from 'vscode';
+import {window, WorkspaceConfiguration} from 'coc.nvim';
 import {Message} from 'vscode-jsonrpc';
 import {CloseAction, ErrorAction, ErrorHandler} from 'vscode-languageclient';
 import { logChan } from './globalContext';

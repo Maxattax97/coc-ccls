@@ -1,37 +1,42 @@
 {
-  "name": "ccls",
+  "name": "coc-ccls",
   "description": "C/C++/ObjC language server supporting cross references, hierarchies, completion and semantic highlighting",
-  "author": "ccls-project",
+  "author": "Max O'Cull",
   "license": "MIT",
   "version": "0.1.23",
-  "publisher": "ccls-project",
   "scripts": {
     "vscode:prepublish": "npm run lint && npm run compile",
     "compile": "npx tsc -p ./",
-    "update-vscode": "node ./node_modules/vscode/bin/install",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "node ./node_modules/vscode/bin/test",
     "lint": "npx tslint -p ./"
   },
+  "keywords": [
+    "coc.nvim",
+    "languageserver",
+    "lsp",
+    "c",
+    "c++",
+    "cplusplus",
+    "ccls"
+  ],
   "devDependencies": {
     "@types/node": "^9.6.41",
     "@types/ws": "^6.0.1",
     "typescript": "^2.9.2",
     "tslint": "^5.11.0",
-    "vsce": "^1.54.0",
-    "vscode": "^1.1.26"
+    "vsce": "^1.54.0"
   },
   "dependencies": {
+    "coc.nvim": "0.0.58",
     "vscode-languageclient": "^5.2.1",
     "ws": "^6.1.4"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/MaskRay/vscode-ccls.git"
+    "url": "https://github.com/Maxattax97/coc-ccls.git"
   },
   "preview": true,
   "engines": {
-    "vscode": "^1.30.0"
+    "coc": ">=0.0.28"
   },
   "categories": [
     "Programming Languages"

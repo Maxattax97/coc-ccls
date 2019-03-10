@@ -6,7 +6,7 @@ import {
   Uri,
   window,
   workspace
-} from "vscode";
+} from "coc.nvim";
 
 export async function jumpToUriAtPosition(
     uri: Uri, position: Position, preserveFocus: boolean) {

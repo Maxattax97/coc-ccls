@@ -1,4 +1,4 @@
-import { StatusBarAlignment, StatusBarItem, window } from "vscode";
+import { StatusBarAlignment, StatusBarItem, window } from "coc.nvim";
 import { Disposable } from "vscode-jsonrpc";
 import { LanguageClient } from "vscode-languageclient";
 import { cclsChan } from './globalContext';

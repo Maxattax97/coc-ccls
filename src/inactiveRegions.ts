@@ -6,7 +6,7 @@ import {
   TextEditorDecorationType,
   window,
   workspace
-} from "vscode";
+} from "coc.nvim";
 import { LanguageClient } from "vscode-languageclient";
 import { disposeAll, normalizeUri } from "./utils";
 

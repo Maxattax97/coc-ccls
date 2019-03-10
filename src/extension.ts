@@ -1,6 +1,6 @@
 import {
     ExtensionContext,
-} from "vscode";
+} from "coc.nvim";
 import { GlobalContext } from "./globalContext";
 
 export async function activate(context: ExtensionContext) {
