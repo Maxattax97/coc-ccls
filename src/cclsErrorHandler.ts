@@ -1,7 +1,12 @@
-import {workspace, WorkspaceConfiguration} from 'coc.nvim';
-import {Message} from 'vscode-jsonrpc';
-import {CloseAction, ErrorAction, ErrorHandler} from 'vscode-languageclient';
+import { CloseAction, ErrorAction, ErrorHandler, workspace, WorkspaceConfiguration} from 'coc.nvim';
+import { Message } from 'vscode-jsonrpc';
+// import { Error } from 'vscode-languageserver-protocol';
+// import { CloseAction, ErrorAction, ErrorHandler} from 'vscode-languageclient';
 import { logChan } from './globalContext';
+
+export class Error {
+  // Not actually used, so we leave a blank implementation.
+}
 
 export class CclsErrorHandler implements ErrorHandler {
   constructor(readonly config: WorkspaceConfiguration) {}

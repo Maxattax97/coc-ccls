@@ -1,5 +1,5 @@
 import * as ls from 'vscode-languageserver-types';
-import { Uri } from 'vscode-uri';
+import Uri from 'vscode-uri';
 
 export interface Icon {
   light: string | Uri;

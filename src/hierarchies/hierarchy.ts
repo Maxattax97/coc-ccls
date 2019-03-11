@@ -7,7 +7,7 @@ import {
   Event,
   Position,
 } from "vscode-languageserver-protocol";
-import { Uri } from "vscode-uri";
+import Uri from "vscode-uri";
 import { IHierarchyNode } from '../types';
 import { disposeAll, setContext } from '../utils';
 

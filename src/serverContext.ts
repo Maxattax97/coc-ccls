@@ -3,15 +3,13 @@ import {
   commands,
   workspace,
   WorkspaceConfiguration,
-} from "coc.nvim";
-import {
   LanguageClient,
   LanguageClientOptions,
   ProvideCodeLensesSignature,
   RevealOutputChannelOn,
-  ServerOptions,
-} from "vscode-languageclient";
-import { Converter } from "vscode-languageclient/lib/protocolConverter";
+  ServerOptions
+} from "coc.nvim";
+// import { Converter } from "vscode-languageclient/lib/protocolConverter";
 import {
   CancellationToken,
   CodeLens,
@@ -21,7 +19,7 @@ import {
   TextDocument,
 } from "vscode-languageserver-protocol";
 import * as ls from "vscode-languageserver-types";
-import { Uri } from "vscode-uri";
+import Uri from "vscode-uri";
 import * as WebSocket from 'ws';
 import { CclsErrorHandler } from "./cclsErrorHandler";
 import { cclsChan, logChan } from './globalContext';
@@ -185,7 +183,7 @@ export class ServerContext implements Disposable {
   private cliConfig: ClientConfig;
   private ignoredConf = new Array<string>();
   private _dispose: Disposable[] = [];
-  private p2c: Converter;
+  // private p2c: Converter;
   private lastGoto: LastGoto = {
     clockTime: 0,
     id: undefined,
@@ -202,7 +200,7 @@ export class ServerContext implements Disposable {
     }
     workspace.onDidChangeConfiguration(this.onDidChangeConfiguration, this, this._dispose);
     this.client = this.initClient();
-    this.p2c = this.client.protocol2CodeConverter;
+    // this.p2c = this.client.protocol2CodeConverter;
   }
 
   public dispose() {
@@ -349,20 +347,20 @@ export class ServerContext implements Disposable {
           uri: uri.toString(),
         },
       });
-      const lenses = this.p2c.asCodeLenses(lensesObjs);
-      return lenses.map((lense: CodeLens) => {
-        const cmd  = lense.command;
-        if (cmd && cmd.command === 'ccls.xref') {
-          // Change to a custom command which will fetch and then show the results
-          cmd.command = 'ccls.showXrefs';
-          cmd.arguments = [
-            uri,
-            lense.range.start,
-            cmd.arguments,
-          ];
-        }
-        return this.p2c.asCodeLens(lense);
-      });
+      // const lenses = this.p2c.asCodeLenses(lensesObjs);
+      // return lenses.map((lense: CodeLens) => {
+      //   const cmd  = lense.command;
+      //   if (cmd && cmd.command === 'ccls.xref') {
+      //     // Change to a custom command which will fetch and then show the results
+      //     cmd.command = 'ccls.showXrefs';
+      //     cmd.arguments = [
+      //       uri,
+      //       lense.range.start,
+      //       cmd.arguments,
+      //     ];
+      //   }
+      //   return this.p2c.asCodeLens(lense);
+      // });
     }
 
     // We run the codeLens request ourselves so we can intercept the response.
@@ -374,7 +372,7 @@ export class ServerContext implements Disposable {
         },
       }
     );
-    const result: CodeLens[] = this.p2c.asCodeLenses(a);
+    // const result: CodeLens[] = this.p2c.asCodeLenses(a);
     // this.displayCodeLens(document, result);
     return [];
   }
@@ -519,13 +517,15 @@ export class ServerContext implements Disposable {
           }
         );
         if (autoGotoIfSingle && locations.length === 1) {
-          const location = this.p2c.asLocation(locations[0]);
-          commands.executeCommand(
-              'ccls.goto', location.uri, location.range.start, []);
+          // const location = this.p2c.asLocation(locations[0]);
+          
+          // const location = workspace.getQuickfixItem(locations[0]);
+          // commands.executeCommand(
+          //     'ccls.goto', location.uri, location.range.start, []);
         } else {
-          commands.executeCommand(
-              'editor.action.showReferences', uri, position,
-              locations.map(this.p2c.asLocation));
+          // commands.executeCommand(
+          //     'editor.action.showReferences', uri, position,
+          //     locations.map(this.p2c.asLocation));
         }
     };
   }
@@ -542,30 +542,30 @@ export class ServerContext implements Disposable {
   // }
 
   private showReferencesCmd(uri: string, position: ls.Position, locations: ls.Location[]) {
-    commands.executeCommand(
-      'editor.action.showReferences',
-      this.p2c.asUri(uri),
-      this.p2c.asPosition(position),
-      locations.map(this.p2c.asLocation)
-    );
+    // commands.executeCommand(
+    //   'editor.action.showReferences',
+      // this.p2c.asUri(uri),
+      // this.p2c.asPosition(position),
+      // locations.map(this.p2c.asLocation)
+    // );
   }
 
   private async gotoCmd(uri: string, position: ls.Position, locations: ls.Location[]) {
-    return jumpToUriAtPosition(
-      this.p2c.asUri(uri),
-      this.p2c.asPosition(position),
-      false /*preserveFocus*/
-    );
+    // return jumpToUriAtPosition(
+      // this.p2c.asUri(uri),
+      // this.p2c.asPosition(position),
+      // false [>preserveFocus<]
+    // );
   }
 
   private async fixItCmd(uri: string, pTextEdits: ls.TextEdit[]) {
-    const textEdits = this.p2c.asTextEdits(pTextEdits);
+    // const textEdits = this.p2c.asTextEdits(pTextEdits);
 
     async function applyEdits() {
-      for (const edit of textEdits) {
+      // for (const edit of textEdits) {
         // editBuilder.replace(edit.range, edit.newText);
-        workspace.applyEdit(edit);
-      }
+        // workspace.applyEdit(edit);
+      // }
       // if (!success) {
       //   window.showErrorMessage("Failed to apply FixIt");
       // }
@@ -578,7 +578,7 @@ export class ServerContext implements Disposable {
     }
 
     // Failed, open new document.
-    const d = await workspace.openResource(Uri.parse(uri));
+    const d = await workspace.openResource(uri);
     // const e = await window.showTextDocument(d);
     // if (!e) { // FIXME seems to be redundant
     //   window.showErrorMessage("Failed to to get editor for FixIt");
@@ -617,9 +617,9 @@ export class ServerContext implements Disposable {
       return;
 
     const parsedUri = Uri.parse(node.location.uri);
-    const parsedPosition = this.p2c.asPosition(node.location.range.start);
+    // const parsedPosition = this.p2c.asPosition(node.location.range.start);
 
-    return jumpToUriAtPosition(parsedUri, parsedPosition, true /*preserveFocus*/);
+    // return jumpToUriAtPosition(parsedUri, parsedPosition, true [>preserveFocus<]);
   }
 
   private async hackGotoForTreeView(
@@ -665,10 +665,10 @@ export class ServerContext implements Disposable {
         }
       );
       if (locations.length === 1) {
-        const location = this.p2c.asLocation(locations[0]);
-        await jumpToUriAtPosition(
-          location.uri, location.range.start,
-          false /*preserveFocus*/);
+        // const location = this.p2c.asLocation(locations[0]);
+        // await jumpToUriAtPosition(
+        //   location.uri, location.range.start,
+        //   false [>preserveFocus<]);
       }
     };
   }

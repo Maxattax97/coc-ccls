@@ -3,7 +3,7 @@ import { LanguageClient } from 'vscode-languageclient/lib/main';
 import {
   Position,
 } from "vscode-languageserver-protocol";
-import { Uri } from "vscode-uri";
+import Uri from "vscode-uri";
 import { Icon, IHierarchyNode } from '../types';
 import { resourcePath } from '../utils';
 import { Hierarchy } from './hierarchy';

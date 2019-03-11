@@ -5,13 +5,13 @@ import {
   Position,
   Range,
 } from "vscode-languageserver-protocol";
-import { Uri } from "vscode-uri";
+import Uri from "vscode-uri";
 
 const window = workspace;
 
 export async function jumpToUriAtPosition(
     uri: Uri, position: Position, preserveFocus: boolean) {
-  const d = await workspace.openResource(uri);
+  const d = await workspace.openResource(uri.toString());
   // const editor = window.activeTextEditor;
   // if (!editor) {
   //   console.log("!editor");

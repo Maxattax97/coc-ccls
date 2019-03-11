@@ -1,7 +1,8 @@
 import {
+  LanguageClient,
   workspace
 } from "coc.nvim";
-import { LanguageClient } from "vscode-languageclient";
+// import { LanguageClient } from "vscode-languageclient";
 import {
   Disposable,
   Range,

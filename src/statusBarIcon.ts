@@ -1,6 +1,5 @@
-import { StatusBarItem, workspace } from "coc.nvim";
+import { StatusBarItem, LanguageClient, workspace } from "coc.nvim";
 import { Disposable } from "vscode-jsonrpc";
-import { LanguageClient } from "vscode-languageclient";
 import { cclsChan } from './globalContext';
 import { dedent, unwrap } from './utils';
 

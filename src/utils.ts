@@ -2,7 +2,7 @@ import { commands } from "coc.nvim";
 import * as path from "path";
 import * as util from "util";
 import { Disposable } from "vscode-languageserver-protocol";
-import { Uri } from "vscode-uri";
+import Uri from "vscode-uri";
 
 export function resourcePath(...paths: string[]): string {
   return path.join(__dirname, "..", "resources", ...paths);
