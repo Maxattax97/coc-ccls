@@ -5,8 +5,6 @@
   "license": "MIT",
   "version": "0.0.3",
   "scripts": {
-    "vscode:prepublish": "npm run lint && npm run compile",
-    "compile": "npx tsc -p ./",
     "lint": "npx tslint -p ./",
     "clean": "rimraf lib",
     "build": "tsc -p tsconfig.json",
@@ -26,17 +24,17 @@
     "@chemzqm/tslint-config": "^1.0.17",
     "@types/node": "^9.6.41",
     "@types/ws": "^6.0.1",
-    "typescript": "^2.9.2",
-    "tslint": "^5.11.0",
     "coc.nvim": "^0.0.32",
-    "vsce": "^1.54.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "tslint": "^5.11.0",
+    "typescript": "^2.9.2",
+    "vsce": "^1.54.0"
   },
   "dependencies": {
     "@types/msgpack-lite": "^0.1.6",
+    "tslib": "^1.9.3",
     "vscode-uri": "^1.0.6",
-    "ws": "^6.1.4",
-    "tslib": "^1.9.3"
+    "ws": "^6.1.4"
   },
   "repository": {
     "type": "git",

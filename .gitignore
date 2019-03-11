@@ -1,4 +1,5 @@
 /out
+/lib
 /node_modules
 /.vscode/settings.json
 /.vscode-test
