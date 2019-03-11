@@ -214,7 +214,7 @@ export class ServerContext implements Disposable {
     try {
       await this.client.onReady();
     } catch (e) {
-      window.showErrorMessage(`Failed to start ccls with command "${
+      window.showMessage(`Failed to start ccls with command "${
         this.cliConfig.launchCommand
       }".`);
     }
@@ -243,21 +243,21 @@ export class ServerContext implements Disposable {
 
     const inheritanceHierarchyProvider = new InheritanceHierarchyProvider(this.client);
     this._dispose.push(inheritanceHierarchyProvider);
-    this._dispose.push(window.registerTreeDataProvider(
-        "ccls.inheritanceHierarchy", inheritanceHierarchyProvider
-    ));
+    // this._dispose.push(window.registerTreeDataProvider(
+    //     "ccls.inheritanceHierarchy", inheritanceHierarchyProvider
+    // ));
 
     const callHierarchyProvider = new CallHierarchyProvider(this.client);
     this._dispose.push(callHierarchyProvider);
-    this._dispose.push(window.registerTreeDataProvider(
-        'ccls.callHierarchy', callHierarchyProvider
-    ));
+    // this._dispose.push(window.registerTreeDataProvider(
+    //     'ccls.callHierarchy', callHierarchyProvider
+    // ));
 
     const memberHierarchyProvider = new MemberHierarchyProvider(this.client);
     this._dispose.push(memberHierarchyProvider);
-    this._dispose.push(window.registerTreeDataProvider(
-        'ccls.memberHierarchy', memberHierarchyProvider
-    ));
+    // this._dispose.push(window.registerTreeDataProvider(
+    //     'ccls.memberHierarchy', memberHierarchyProvider
+    // ));
 
     // Common between tree views.
     this._dispose.push(commands.registerCommand(
@@ -322,10 +322,10 @@ export class ServerContext implements Disposable {
         const kRestart = 'Restart';
         const message = `Please restart server to apply the "ccls${key}" configuration change.`;
 
-        const selected = await window.showInformationMessage(message, kRestart);
-        if (selected === kRestart)
-          commands.executeCommand('ccls.restart');
-        break;
+        const selected = await window.showMessage(message);
+        // if (selected === kRestart)
+        //   commands.executeCommand('ccls.restart');
+        // break;
       }
     }
   }
@@ -346,7 +346,7 @@ export class ServerContext implements Disposable {
       const lensesObjs = await this.client.sendRequest<Array<any>>('textDocument/codeLens', {
         position,
         textDocument: {
-          uri: uri.toString(true),
+          uri: uri.toString(),
         },
       });
       const lenses = this.p2c.asCodeLenses(lensesObjs);
@@ -370,57 +370,57 @@ export class ServerContext implements Disposable {
       'textDocument/codeLens',
       {
         textDocument: {
-          uri: document.uri.toString(true),
+          uri: document.uri.toString(),
         },
       }
     );
     const result: CodeLens[] = this.p2c.asCodeLenses(a);
-    this.displayCodeLens(document, result);
+    // this.displayCodeLens(document, result);
     return [];
   }
 
-  private displayCodeLens(document: TextDocument, allCodeLens: CodeLens[]) {
-    const decorationOpts: DecorationRenderOptions = {
-      after: {
-        color: new ThemeColor('editorCodeLens.foreground'),
-        fontStyle: 'italic',
-      },
-      rangeBehavior: DecorationRangeBehavior.ClosedClosed,
-    };
-
-    const codeLensDecoration = window.createTextEditorDecorationType(decorationOpts);
-    for (const editor of window.visibleTextEditors) {
-      if (editor.document !== document)
-        continue;
-
-      const opts: DecorationOptions[] = [];
-
-      for (const codeLens of allCodeLens) {
-        // FIXME: show a real warning or disable on-the-side code lens.
-        if (!codeLens.isResolved)
-          console.error('Code lens is not resolved');
-
-        // Default to after the content.
-        let position = codeLens.range.end;
-
-        // If multiline push to the end of the first line - works better for
-        // functions.
-        if (codeLens.range.start.line !== codeLens.range.end.line)
-          position = new Position(codeLens.range.start.line, 1000000);
-
-        const range = new Range(position, position);
-        const opt: DecorationOptions = {
-          range,
-          renderOptions:
-              {after: {contentText: ' ' + unwrap(codeLens.command, "lens").title + ' '}}
-        };
-
-        opts.push(opt);
-      }
-
-      editor.setDecorations(codeLensDecoration, opts);
-    }
-  }
+  // private displayCodeLens(document: TextDocument, allCodeLens: CodeLens[]) {
+  //   const decorationOpts: DecorationRenderOptions = {
+  //     after: {
+  //       color: new ThemeColor('editorCodeLens.foreground'),
+  //       fontStyle: 'italic',
+  //     },
+  //     rangeBehavior: DecorationRangeBehavior.ClosedClosed,
+  //   };
+  //
+  //   const codeLensDecoration = window.createTextEditorDecorationType(decorationOpts);
+  //   for (const editor of window.visibleTextEditors) {
+  //     if (editor.document !== document)
+  //       continue;
+  //
+  //     const opts: DecorationOptions[] = [];
+  //
+  //     for (const codeLens of allCodeLens) {
+  //       // FIXME: show a real warning or disable on-the-side code lens.
+  //       if (!codeLens.isResolved)
+  //         console.error('Code lens is not resolved');
+  //
+  //       // Default to after the content.
+  //       let position = codeLens.range.end;
+  //
+  //       // If multiline push to the end of the first line - works better for
+  //       // functions.
+  //       if (codeLens.range.start.line !== codeLens.range.end.line)
+  //         position = new Position(codeLens.range.start.line, 1000000);
+  //
+  //       const range = new Range(position, position);
+  //       const opt: DecorationOptions = {
+  //         range,
+  //         renderOptions:
+  //             {after: {contentText: ' ' + unwrap(codeLens.command, "lens").title + ' '}}
+  //       };
+  //
+  //       opts.push(opt);
+  //     }
+  //
+  //     editor.setDecorations(codeLensDecoration, opts);
+  //   }
+  // }
 
   private initClient(): LanguageClient {
     const args = this.cliConfig.launchArgs;
@@ -504,15 +504,15 @@ export class ServerContext implements Disposable {
         userParams: a dict defined as `args` in keybindings.json (or passed by other extensions like VSCodeVIM)
         Values defined by user have higher priority than `extraParams`
         */
-        const editor = unwrap(window.activeTextEditor, "window.activeTextEditor");
-        const position = editor.selection.active;
-        const uri = editor.document.uri;
+        // const editor = unwrap(window.activeTextEditor, "window.activeTextEditor");
+        const position = workspace.getCursorPosition();
+        const uri = workspace.uri;
         const locations = await this.client.sendRequest<Array<ls.Location>>(
           methodName,
           {
             position,
             textDocument: {
-              uri: uri.toString(true),
+              uri: uri.toString(),
             },
             ...extraParams,
             ...userParams
@@ -530,16 +530,16 @@ export class ServerContext implements Disposable {
     };
   }
 
-  private async showXrefsHandlerCmd(uri: Uri, position: Position, xrefArgs: any[]) {
-    const locations = await commands.executeCommand<ls.Location[]>('ccls.xref', ...xrefArgs);
-    if (!locations)
-      return;
-    commands.executeCommand(
-      'editor.action.showReferences',
-      uri, this.p2c.asPosition(position),
-      locations.map(this.p2c.asLocation)
-    );
-  }
+  // private async showXrefsHandlerCmd(uri: Uri, position: Position, xrefArgs: any[]) {
+  //   const locations = commands.executeCommand('ccls.xref', ...xrefArgs);
+  //   if (!locations)
+  //     return;
+  //   commands.executeCommand(
+  //     'editor.action.showReferences',
+  //     uri, this.p2c.asPosition(position),
+  //     locations.map(this.p2c.asLocation)
+  //   );
+  // }
 
   private showReferencesCmd(uri: string, position: ls.Position, locations: ls.Location[]) {
     commands.executeCommand(
@@ -561,33 +561,30 @@ export class ServerContext implements Disposable {
   private async fixItCmd(uri: string, pTextEdits: ls.TextEdit[]) {
     const textEdits = this.p2c.asTextEdits(pTextEdits);
 
-    async function applyEdits(editor: TextEditor) {
-      const success = await editor.edit((editBuilder) => {
-        for (const edit of textEdits) {
-          editBuilder.replace(edit.range, edit.newText);
-        }
-      });
-      if (!success) {
-        window.showErrorMessage("Failed to apply FixIt");
+    async function applyEdits() {
+      for (const edit of textEdits) {
+        // editBuilder.replace(edit.range, edit.newText);
+        workspace.applyEdit(edit);
       }
+      // if (!success) {
+      //   window.showErrorMessage("Failed to apply FixIt");
+      // }
     }
 
     // Find existing open document.
-    for (const textEditor of window.visibleTextEditors) {
-      if (textEditor.document.uri.toString(true) === normalizeUri(uri)) {
-        applyEdits(textEditor);
-        return;
-      }
+    if (workspace.document.toString() === normalizeUri(uri)) {
+      applyEdits();
+      return;
     }
 
     // Failed, open new document.
-    const d = await workspace.openTextDocument(Uri.parse(uri));
-    const e = await window.showTextDocument(d);
-    if (!e) { // FIXME seems to be redundant
-      window.showErrorMessage("Failed to to get editor for FixIt");
-    }
+    const d = await workspace.openResource(Uri.parse(uri));
+    // const e = await window.showTextDocument(d);
+    // if (!e) { // FIXME seems to be redundant
+    //   window.showErrorMessage("Failed to to get editor for FixIt");
+    // }
 
-    applyEdits(e);
+    applyEdits();
   }
 
   private async autoImplementCmd(uri: string, pTextEdits: ls.TextEdit[]) {
@@ -599,19 +596,19 @@ export class ServerContext implements Disposable {
     if (pTextEdits.length === 1)
       commands.executeCommand('ccls._applyFixIt', uri, pTextEdits);
     else {
-      class MyQuickPick implements QuickPickItem {
-        constructor(
-            public label: string, public description: string,
-            public edit: any) {}
-      }
-      const items: Array<MyQuickPick> = [];
-      for (const edit of pTextEdits) {
-        items.push(new MyQuickPick(edit.newText, '', edit));
-      }
-      const selected = await window.showQuickPick(items);
-      if (!selected)
-        return;
-      commands.executeCommand('ccls._applyFixIt', uri, [selected.edit]);
+      // class MyQuickPick implements QuickPickItem {
+      //   constructor(
+      //       public label: string, public description: string,
+      //       public edit: any) {}
+      // }
+      // const items: Array<MyQuickPick> = [];
+      // for (const edit of pTextEdits) {
+      //   items.push(new MyQuickPick(edit.newText, '', edit));
+      // }
+      // const selected = await window.showQuickPick(items);
+      // if (!selected)
+      //   return;
+      // commands.executeCommand('ccls._applyFixIt', uri, [selected.edit]);
     }
   }
 
@@ -654,15 +651,15 @@ export class ServerContext implements Disposable {
 
   private makeNavigateHandler(methodName: string) {
     return async (userParams: any) => {
-      const editor = unwrap(window.activeTextEditor, "window.activeTextEditor");
-      const position = editor.selection.active;
-      const uri = editor.document.uri;
+      const editor = unwrap(window, "window.activeTextEditor");
+      const position = workspace.getCursorPosition();
+      const uri = editor.document;
       const locations = await this.client.sendRequest<Array<ls.Location>>(
         methodName,
         {
           position,
           textDocument: {
-            uri: uri.toString(true),
+            uri: uri.toString(),
           },
           ...userParams
         }
