@@ -1,13 +1,13 @@
 import * as cp from "child_process";
 import {
   commands,
-  workspace,
-  WorkspaceConfiguration,
   LanguageClient,
   LanguageClientOptions,
   ProvideCodeLensesSignature,
   RevealOutputChannelOn,
-  ServerOptions
+  ServerOptions,
+  workspace,
+  WorkspaceConfiguration
 } from "coc.nvim";
 // import { Converter } from "vscode-languageclient/lib/protocolConverter";
 import {
@@ -518,7 +518,6 @@ export class ServerContext implements Disposable {
         );
         if (autoGotoIfSingle && locations.length === 1) {
           // const location = this.p2c.asLocation(locations[0]);
-          
           // const location = workspace.getQuickfixItem(locations[0]);
           // commands.executeCommand(
           //     'ccls.goto', location.uri, location.range.start, []);
