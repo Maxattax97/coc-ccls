@@ -25,9 +25,9 @@ import { Uri } from "vscode-uri";
 import * as WebSocket from 'ws';
 import { CclsErrorHandler } from "./cclsErrorHandler";
 import { cclsChan, logChan } from './globalContext';
-import { CallHierarchyProvider } from "./hierarchies/callHierarchy";
-import { InheritanceHierarchyProvider } from "./hierarchies/inheritanceHierarchy";
-import { MemberHierarchyProvider } from "./hierarchies/memberHierarchy";
+// import { CallHierarchyProvider } from "./hierarchies/callHierarchy";
+// import { InheritanceHierarchyProvider } from "./hierarchies/inheritanceHierarchy";
+// import { MemberHierarchyProvider } from "./hierarchies/memberHierarchy";
 import { InactiveRegionsProvider } from "./inactiveRegions";
 import { PublishSemanticHighlightArgs, SemanticContext, semanticTypes } from "./semantic";
 import { StatusBarIconProvider } from "./statusBarIcon";
@@ -224,7 +224,7 @@ export class ServerContext implements Disposable {
     this._dispose.push(commands.registerCommand("ccls.member", this.makeRefHandler("$ccls/member")));
     this._dispose.push(commands.registerCommand(
       "ccls.base", this.makeRefHandler("$ccls/inheritance", { derived: false }, true)));
-    this._dispose.push(commands.registerCommand("ccls.showXrefs", this.showXrefsHandlerCmd, this));
+    // this._dispose.push(commands.registerCommand("ccls.showXrefs", this.showXrefsHandlerCmd, this));
 
     // The language client does not correctly deserialize arguments, so we have a
     // wrapper command that does it for us.
@@ -241,20 +241,20 @@ export class ServerContext implements Disposable {
       this._dispose.push(inact);
     }
 
-    const inheritanceHierarchyProvider = new InheritanceHierarchyProvider(this.client);
-    this._dispose.push(inheritanceHierarchyProvider);
+    // const inheritanceHierarchyProvider = new InheritanceHierarchyProvider(this.client);
+    // this._dispose.push(inheritanceHierarchyProvider);
     // this._dispose.push(window.registerTreeDataProvider(
     //     "ccls.inheritanceHierarchy", inheritanceHierarchyProvider
     // ));
 
-    const callHierarchyProvider = new CallHierarchyProvider(this.client);
-    this._dispose.push(callHierarchyProvider);
+    // const callHierarchyProvider = new CallHierarchyProvider(this.client);
+    // this._dispose.push(callHierarchyProvider);
     // this._dispose.push(window.registerTreeDataProvider(
     //     'ccls.callHierarchy', callHierarchyProvider
     // ));
 
-    const memberHierarchyProvider = new MemberHierarchyProvider(this.client);
-    this._dispose.push(memberHierarchyProvider);
+    // const memberHierarchyProvider = new MemberHierarchyProvider(this.client);
+    // this._dispose.push(memberHierarchyProvider);
     // this._dispose.push(window.registerTreeDataProvider(
     //     'ccls.memberHierarchy', memberHierarchyProvider
     // ));
