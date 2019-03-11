@@ -20,7 +20,7 @@ import {
 } from "vscode-languageserver-protocol";
 import * as ls from "vscode-languageserver-types";
 import Uri from "vscode-uri";
-import * as WebSocket from 'ws';
+import WebSocket from 'ws';
 import { CclsErrorHandler } from "./cclsErrorHandler";
 import { cclsChan, logChan } from './globalContext';
 // import { CallHierarchyProvider } from "./hierarchies/callHierarchy";
